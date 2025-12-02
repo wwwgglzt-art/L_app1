@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Game Share Forum</title>
+
+    <!-- 外部资源引入 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- 引入自定义 CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="selection:bg-blue-500/30">
+
+    <!-- NAVIGATION BAR -->
+    <nav class="backdrop-blur-xl bg-white/10 border border-white/20 fixed top-0 left-0 right-0 z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <div id="nav-logo" class="text-2xl font-bold text-white cursor-pointer tracking-tight">Game Share Forum</div>
+
+            <div class="flex items-center gap-4">
+                <!-- 导航按钮（初始文本会被JS替换为当前语言） -->
+                <button id="nav-landing" class="nav-btn bg-white text-black font-medium px-4 py-2 rounded-xl transition-all hover:bg-white/90" data-lang-key="nav.home">Home</button>
+                <button id="nav-write" class="nav-btn text-white px-4 py-2 rounded-xl transition-all hover:bg-white/10" data-lang-key="nav.write">Write</button>
+                <button id="nav-read" class="nav-btn text-white px-4 py-2 rounded-xl transition-all hover:bg-white/10" data-lang-key="nav.read">Read</button>
+                
+                <!-- 语言选择入口按钮 -->
+                <button id="nav-lang" class="nav-btn text-white px-4 py-2 rounded-xl transition-all hover:bg-white/10" data-lang-key="nav.lang">Language</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="pt-24 pb-24 px-6 min-h-screen">
+
+        <!-- ERROR MESSAGE CONTAINER -->
+        <div id="error-container" class="hidden max-w-2xl mx-auto mb-6 bg-red-900/50 border border-red-800 text-red-200 px-4 py-3 rounded-lg"></div>
+
+        <!-- VIEW 0: 语言选择页面（新增日语按钮） -->
+        <section id="view-lang" class="view-section fade-in-up flex flex-col items-center justify-center min-h-[60vh] text-center">
+            <h2 class="text-3xl font-semibold text-white mb-12 tracking-tight" data-lang-key="lang.selectTitle">Select Language</h2>
+            <div class="flex flex-col sm:flex-row gap-8">
+                <button id="lang-en" class="w-48 py-6 rounded-xl text-xl font-medium transition-all duration-300 bg-zinc-900 text-white border border-zinc-800 hover:bg-white hover:text-black hover:border-white">
+                    English
+                </button>
+                <button id="lang-zh" class="w-48 py-6 rounded-xl text-xl font-medium transition-all duration-300 bg-zinc-900 text-white border border-zinc-800 hover:bg-white hover:text-black hover:border-white">
+                    中文
+                </button>
+                <!-- 新增日语选择按钮 -->
+                <button id="lang-ja" class="w-48 py-6 rounded-xl text-xl font-medium transition-all duration-300 bg-zinc-900 text-white border border-zinc-800 hover:bg-white hover:text-black hover:border-white">
+                    日本語
+                </button>
+            </div>
+        </section>
+
+        <!-- VIEW 1: LANDING PAGE -->
+        <section id="view-landing" class="view-section hidden fade-in-up flex flex-col items-center justify-center min-h-[60vh] text-center">
+            <h1 class="text-5xl md:text-7xl font-semibold tracking-tighter text-white mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-zinc-400" data-lang-key="hero.title">
+                Global Game Share Forum.
+            </h1>
+            <p class="text-xl md:text-2xl text-zinc-400 max-w-2xl mb-12 font-light leading-relaxed" data-lang-key="hero.subtitle">
+                A minimal space for gamers worldwide to share their favorites. <br/>
+                Simple. Elegant. Connected.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 w-full max-w-md justify-center">
+                <button id="hero-write-btn" class="group relative px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-[1.02] bg-blue-600 text-white hover:bg-blue-500 shadow-[0_0_20px_rgba(37,99,235,0.3)]" data-lang-key="hero.writeBtn">
+                    Share a Game
+                </button>
+                <button id="hero-read-btn" class="group relative px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-[1.02] bg-zinc-900 text-white border border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700" data-lang-key="hero.readBtn">
+                    View Shared Games
+                </button>
+            </div>
+        </section>
+
+        <!-- VIEW 2: WRITE MESSAGE -->
+        <section id="view-write" class="view-section hidden max-w-2xl mx-auto pt-10">
+            <h2 class="text-3xl font-semibold text-white mb-2 tracking-tight" data-lang-key="write.title">Share Your Favorite Game</h2>
+            <p class="text-zinc-500 mb-8" data-lang-key="write.subtitle">Share your favorite game with gamers around the world.</p>
+
+            <form id="post-form" class="space-y-8">
+                <div class="group">
+                    <label class="block text-xs font-medium text-zinc-500 uppercase tracking-widest mb-2 transition-colors" data-lang-key="write.nameLabel">Name</label>
+                    <input type="text" id="input-name" placeholder="Your Name (Optional)" class="w-full bg-transparent border-b border-zinc-800 py-3 text-xl text-white placeholder-zinc-700 focus:outline-none focus:border-blue-500 transition-colors" data-lang-key="write.namePlaceholder">
+                </div>
+
+                <div class="group">
+                    <label class="block text-xs font-medium text-zinc-500 uppercase tracking-widest mb-2 transition-colors" data-lang-key="write.messageLabel">Game & Thoughts</label>
+                    <textarea id="input-message" rows="4" maxlength="250" placeholder="My favorite game is... It's awesome because..." class="w-full bg-transparent border-b border-zinc-800 py-3 text-2xl font-light text-white placeholder-zinc-700 focus:outline-none focus:border-blue-500 transition-colors resize-none" data-lang-key="write.messagePlaceholder"></textarea>
+                    <div id="char-count" class="text-right mt-2 text-zinc-600 text-xs" data-lang-key="write.charCount">0/250</div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" id="submit-btn" class="w-full py-4 rounded-full text-lg font-medium transition-all duration-300 bg-zinc-900 text-zinc-600 cursor-not-allowed" disabled data-lang-key="write.postBtn">
+                        Share Now
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- VIEW 3: READ MESSAGES -->
+        <section id="view-read" class="view-section hidden max-w-6xl mx-auto">
+            <div id="loading-indicator" class="text-center py-20 text-zinc-600" data-lang-key="read.loading">Connecting to global game stream...</div>
+            <div id="messages-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Messages will be injected here by JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="fixed bottom-0 w-full glass-nav border-t border-zinc-900 py-4 text-center z-40">
+        <p class="text-xs text-zinc-600" data-lang-key="footer.copyright">Designed for Gamers. Interactive Global System.</p>
+    </footer>
+
+    <!-- 引入自定义 JS（模块类型） -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
