@@ -1,20 +1,20 @@
 // 1. 引入依赖
-const fs = require('fs');
-const express = require('express');
-const mysql = require('mysql2/promise');
-const cors = require('cors');
+import { readFileSync } from 'fs';
+import express， { json } from 'express';
+import { createPool } from 'mysql2/promise';
+import cors from 'cors';
 
 // 2. 初始化Express实例
 const app = express();
 const PORT = 4000; // 后端服务端口（需与前端API_BASE_URL对应）
 
 // 3. 配置中间件（解析JSON请求、允许跨域）
-app。use(express。json());
-app。use(cors()); // 允许前端跨域请求
+app.use(json());
+app.use(cors()); // 允许前端跨域请求
 
 
 // 4. 配置MySQL连接池（核心：连接到game_share_forum数据库）
-const dbPool = mysql.createPool({
+const dbPool = createPool({
   host: 'gateway01.eu-central-1.prod.aws.tidbcloud.com',        // 本地MySQL地址（默认）
   user: '3MPz42NYYgcq8Mp.root',             // 你的MySQL用户名（默认是root）
   password: 'ZuxPVHFMqTjj9JuR', // 替换为你安装MySQL时设置的密码（若为空则填''）
@@ -22,9 +22,9 @@ const dbPool = mysql.createPool({
   charset: 'utf8mb4',       // 匹配数据库字符集（支持多语言）
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
   ssl: {
-    ca: fs.readFileSync('./tidb-ca.pem'), // 本地CA证书路径
+    ca: readFileSync('./tidb-ca.pem')， // 本地CA证书路径
     rejectUnauthorized: true
   }
 });
@@ -45,7 +45,7 @@ async function testDbConnection() {
 
 // 6. 编写API接口（对应前端的发布/获取消息）
 // 接口1：发布游戏分享（POST请求，对应前端提交表单）
-app。post('/api/message'， async (req， res) => {
+app.post('/api/message', async (req， res) => {
   try {
     const { username, message, poster_id } = req.body;
 
@@ -68,7 +68,7 @@ app。post('/api/message'， async (req， res) => {
 
 
 // 接口2：获取所有游戏分享（GET请求，对应前端查看留言）
-app。get('/api/messages'， async (req, res) => {
+app.get('/api/messages', async (req, res) => {
   try {
     // 执行SQL查询（按时间倒序，最新的在前面）
     const [rows] = await dbPool.execute(
@@ -83,7 +83,7 @@ app。get('/api/messages'， async (req, res) => {
 
 
 // 7. 启动后端服务
-app。listen(PORT, async () => {
+app.listen(PORT, async () => {
   await testDbConnection(); // 启动时先测试数据库连接
   console.log(`🚀 Node.js 后端服务已启动：http://localhost:${PORT}`);
 
