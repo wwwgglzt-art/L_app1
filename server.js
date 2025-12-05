@@ -21,7 +21,7 @@ const dbPool = createPool({
   charset: 'utf8mb4',
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0,
+  queueLimit:0,
   ssl: {
     rejectUnauthorized: false // 关键：无证书SSL配置
   }
@@ -34,19 +34,20 @@ async function testDbConnection() {
     console.log('✅ TiDB Cloud 连接成功！');
     connection.release();
   } catch (error) {
-    console.error('❌ TiDB Cloud 连接失败:', error.message);
+    console.error('❌ TiDB Cloud 连接失败：', error.message);
     process.exit(1);
   }
 }
 
 // 6. API接口（保持不变）
-app.post('/api/message'， async (req， res) => { /* 原有逻辑 */ });
-app.get('/api/messages'， async (req, res) => { /* 原有逻辑 */ });
+app.post('/api/message', async (req， res) => { /* 原有逻辑 */ });
+app.get('/api/messages', async (req, res) => { /* 原有逻辑 */ });
 
 // 7. 启动服务
 app.listen(PORT, async () => {
   await testDbConnection();
   console.log(`🚀 后端服务已启动：http://localhost:${PORT}`);
 });
+
 
 
