@@ -8,8 +8,8 @@ const app = express();
 const PORT = process.env.PORT || 4000; // 关键：优先使用环境变量端口
 
 // 3. 配置中间件
-app.use(json());
-app.use(cors());
+app。use(json());
+app。use(cors());
 
 // 4. 配置MySQL连接池（修复TiDB端口和SSL）
 const dbPool = createPool({
@@ -40,14 +40,15 @@ async function testDbConnection() {
 }
 
 // 6. API接口（保持不变）
-app.post('/api/message', async (req， res) => { /* 原有逻辑 */ });
-app.get('/api/messages', async (req, res) => { /* 原有逻辑 */ });
+app。post('/api/message'， async (req， res) => { /* 原有逻辑 */ });
+app。get('/api/messages'， async (req, res) => { /* 原有逻辑 */ });
 
 // 7. 启动服务
-app.listen(PORT, async () => {
+app。listen(PORT, async () => {
   await testDbConnection();
   console.log(`🚀 后端服务已启动：http://localhost:${PORT}`);
 });
+
 
 
 
