@@ -1,5 +1,6 @@
 {
   "name": "game_share_forum",
+  "type": "module", 
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
@@ -16,3 +17,4 @@
     "nodemon": "^3.1.4"
   }
 }
+
