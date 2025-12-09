@@ -129,7 +129,7 @@ const languagePack = {
 };
 
 // --- 核心配置：后端地址（与 server.js 端口一致）---
-const API_BASE_URL = 'http://localhost:3001'; 
+const API_BASE_URL = 'https://l-app1-1.onrender.com'; 
 
 // 全局状态变量
 let posterId = localStorage.getItem('anonymous_poster_id');
@@ -508,4 +508,5 @@ function initApp() {
 }
 
 // 启动应用
+
 initApp();
